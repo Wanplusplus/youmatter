@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouMatter - Mental Health Journals</title>
+    <style>
+        /* Previous CSS remains the same, just adding image-specific styles */
+        
+        /* Image avatar styles */
+        .professional-avatar-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            background: linear-gradient(135deg, #4299e1, #3182ce); /* Fallback if image doesn't load */
+            display: block;
+        }
+        
+        .modal-avatar-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            background: linear-gradient(135deg, #4299e1, #3182ce); /* Fallback if image doesn't load */
+            display: block;
+        }
+        
+        /* Rest of your CSS remains exactly the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #f7fafc;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Medical Silhouettes */
+        .medical-silhouette {
+            position: fixed;
+            z-index: 1;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .medical-silhouette.doctor-left {
+            left: -50px;
+            top: 20%;
+            width: 200px;
+            height: 300px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Cpath d='M100 50c20 0 35 15 35 35 0 15-8 28-20 33v20h-30v-20c-12-5-20-18-20-33 0-20 15-35 35-35zm-25 100h50v20l-10 5v100c0 8-7 15-15 15s-15-7-15-15V175l-10-5v-20zm15 130h20v20h-20v-20z' fill='white'/%3E%3C/svg%3E") no-repeat;
+            background-size: contain;
+        }
+
+        .medical-silhouette.patient-right {
+            right: -50px;
+            top: 30%;
+            width: 180px;
+            height: 250px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 250'%3E%3Cpath d='M90 40c15 0 25 10 25 25s-10 25-25 25-25-10-25-25 10-25 25-25zm-20 70h40v15l-8 5v95c0 6-5 11-12 11s-12-5-12-11V130l-8-5v-15zm12 120h16v20h-16v-20z' fill='white'/%3E%3C/svg%3E") no-repeat;
+            background-size: contain;
+        }
+
+        .medical-silhouette.stethoscope-left {
+            left: 20px;
+            bottom: 15%;
+            width: 120px;
+            height: 120px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpath d='M30 20v40c0 15 10 25 25 25h10c15 0 25-10 25-25V20M50 85v15c0 8 7 15 15 15s15-7-15-15v-15M95 85c8 0 15 7 15 15s-7 15-15 15-15-7-15-15 7-15 15-15z' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E") no-repeat;
+            background-size: contain;
+        }
+
+        .medical-silhouette.heart-right {
+            right: 30px;
+            bottom: 20%;
+            width: 100px;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 85C25 65 10 50 10 35c0-10 8-18 18-18 7 0 13 4 16 10 3-6 9-10 16-10 10 0 18 8 18 18 0 15-15 30-40 50z' fill='white'/%3E%3C/svg%3E") no-repeat;
+            background-size: contain;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.03; }
+            50% { transform: scale(1.1); opacity: 0.05; }
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(26, 54, 93, 0.95);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 70px;
+        }
+
+        .logo img {
+            max-height: 200px;
+            width: 200px;
+            filter: brightness(0) invert(1);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            cursor: pointer;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: #cbd5e0;
+            border-bottom-color: #cbd5e0;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 2px;
+            background: #e2e8f0;
+            margin: 4px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Container */
+        .page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Home Page */
+        .home-page {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            transition: transform 0.5s ease-in-out;
+            min-height: 100vh;
+        }
+
+        .home-page.slide-out {
+            transform: translateX(-100%);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            padding: 140px 2rem 80px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .welcome-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .welcome-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #f7fafc;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            animation: slideUp 1s ease 0.2s both;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.4rem;
+            color: #cbd5e0;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            animation: slideUp 1s ease 0.4s both;
+        }
+
+        .welcome-description {
+            font-size: 1.1rem;
+            color: #a0aec0;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: slideUp 1s ease 0.6s both;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            min-height: calc(100vh - 400px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 2rem;
+        }
+
+        /* Navigation Buttons Section */
+        .navigation-buttons {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .buttons-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #f7fafc;
+            font-weight: 600;
+        }
+
+        .buttons-subtitle {
+            font-size: 1.2rem;
+            color: #a0aec0;
+            margin-bottom: 4rem;
+            line-height: 1.6;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        .button-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-button:hover .button-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .button-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #f7fafc;
+            margin-bottom: 1rem;
+        }
+
+        .button-description {
+            color: #cbd5e0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Content Pages */
+        .content-page {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 100%;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            padding: 120px 2rem 4rem;
+            transition: transform 0.5s ease-in-out;
+            overflow-x: hidden;
+            /* Removed min-height: 100vh to fix scrolling issue */
+        }
+
+        .content-page.active {
+            transform: translateX(-100%);
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            color: #f7fafc;
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: left;
+            color: #e2e8f0;
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+
+        /* Professionals Grid */
+        .professionals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .professional-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .professional-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .professional-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 600;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .professional-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #f7fafc;
+            margin-bottom: 0.5rem;
+        }
+
+        .professional-credentials {
+            color: #cbd5e0;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+
+        .professional-specialty {
+            color: #90cdf4;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .professional-workplace {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Facilities Grid */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .facility-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .facility-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .facility-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .facility-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #38b2ac, #319795);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .facility-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #f7fafc;
+        }
+
+        .facility-info {
+            space-y: 0.8rem;
+        }
+
+        .facility-detail {
+            color: #cbd5e0;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .facility-detail::before {
+            content: "•";
+            color: #90cdf4;
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Back Button */
+        .back-button {
+            margin-top: 3rem;
+            padding: 1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f7fafc;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 54, 93, 0.95);
+            backdrop-filter: blur(15px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: #f7fafc;
+            padding: 3rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: expandIn 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: #cbd5e0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.1);
+            color: #f7fafc;
+        }
+
+        .modal-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: 600;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-name {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #f7fafc;
+            font-weight: 600;
+        }
+
+        .modal-details {
+            text-align: left;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+
+        .modal-details p {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+        }
+
+        .modal-details strong {
+            color: #90cdf4;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.2);
+            color: #cbd5e0;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #f7fafc;
+            letter-spacing: 2px;
+        }
+
+        .footer-text {
+            margin-bottom: 1rem;
+            color: #a0aec0;
+            font-size: 1rem;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.9rem;
+            color: #718096;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes expandIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .medical-silhouette {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(26, 54, 93, 0.95);
+                flex-direction: column;
+                padding: 1rem 0;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+                backdrop-filter: blur(10px);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.8rem 0;
+            }
+            
+            .mobile-menu {
+                display: flex;
+            }
+            
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .buttons-title, .page-title {
+                font-size: 2rem;
+            }
+            
+            .professionals-grid, .facilities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .modal-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .content-page {
+                padding: 100px 1rem 2rem;
+            }
+
+            .button-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .buttons-title, .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .professional-card, .facility-card {
+                padding: 2rem;
+            }
+            
+            .content-page {
+                padding: 80px 1rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Medical Silhouettes -->
+    <div class="medical-silhouette doctor-left"></div>
+    <div class="medical-silhouette patient-right"></div>
+    <div class="medical-silhouette stethoscope-left"></div>
+    <div class="medical-silhouette heart-right"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo" onclick="goToHome()">
+                <img src="YouJourn.png" alt="YouJourn Logo">
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a onclick="goToHome()">HOME</a></li>
+                    <li><a onclick="showPage('about')">ABOUT</a></li>
+                    <!-- Removed FAQ link -->
+                </ul>
+                <div class="mobile-menu" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Home Page -->
+        <div id="home-page" class="home-page">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-container">
+                    <h1 class="welcome-title">YouMatter</h1>
+                    <p class="welcome-subtitle">Professional Mental Health Resources</p>
+                    <p class="welcome-description">
+                        Connecting individuals with qualified mental health professionals and therapeutic resources through our specialized journal system. Your mental health journey is supported by evidence-based practices and licensed professionals.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Main Content with Navigation Buttons -->
+            <main class="main-content">
+                <div class="navigation-buttons">
+                    <h2 class="buttons-title">Access Professional Resources</h2>
+                    <p class="buttons-subtitle">Choose from our network of licensed mental health professionals and accredited treatment facilities.</p>
+                    
+                    <div class="button-grid">
+                        <div class="nav-button" onclick="showPage('professionals')">
+                            <div class="button-icon">👨‍⚕️</div>
+                            <h3 class="button-title">Medical Professionals</h3>
+                            <p class="button-description">Browse our network of licensed mental health practitioners, including psychiatrists and psychologists with specialized expertise.</p>
+                        </div>
+                        
+                        <div class="nav-button" onclick="showPage('facilities-categories')">
+                            <div class="button-icon">🏥</div>
+                            <h3 class="button-title">Health Facilities</h3>
+                            <p class="button-description">Explore mental health facilities, support groups, and organizations offering comprehensive mental health services.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">YouMatter</div>
+                    <p class="footer-text">Professional mental health resources and therapeutic journal systems.</p>
+                    <p class="footer-text">Supporting your mental wellness through evidence-based practices.</p>
+                    <div class="footer-disclaimer">
+                        <p>© 2025 YouMatter. All rights reserved. | Privacy Policy | Terms of Service</p>
+                        <p>This platform provides information about licensed mental health resources and should not replace professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers for personalized mental health care. All listed professionals are licensed and credentialed according to state and national standards.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Medical Professionals Selection Page -->
+        <div id="professionals-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Select Professional Type</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Choose the type of mental health professional you'd like to connect with.</p>
+                
+                <div class="button-grid">
+                    <div class="nav-button" onclick="showProfessionalType('psychiatrists')">
+                        <div class="button-icon">🩺</div>
+                        <h3 class="button-title">Psychiatrists</h3>
+                        <p class="button-description">Medical doctors specializing in mental health diagnosis, treatment, and medication management.</p>
+                    </div>
+                    
+                    <div class="nav-button" onclick="showProfessionalType('psychologists')">
+                        <div class="button-icon">🧠</div>
+                        <h3 class="button-title">Psychologists</h3>
+                        <p class="button-description">Licensed professionals providing therapy, psychological testing, and evidence-based interventions.</p>
+                    </div>
+                </div>
+                
+                <button class="back-button" onclick="goToHome()">Return to Home</button>
+            </div>
+        </div>
+
+        <!-- Psychiatrists Page -->
+        <div id="psychiatrists-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Psychiatrists in Bacolod City</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Licensed medical doctors specializing in psychiatric care and mental health treatment.</p>
+                <div class="professionals-grid" id="psychiatristsGrid">
+                    <!-- Psychiatrists will be generated by JavaScript -->
+                </div>
+                <button class="back-button" onclick="showPage('professionals')">Back to Professional Types</button>
+            </div>
+        </div>
+
+        <!-- Psychologists Page -->
+        <div id="psychologists-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Psychologists in Bacolod City</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Licensed psychological practitioners providing therapeutic services and assessments.</p>
+                <div class="professionals-grid" id="psychologistsGrid">
+                    <!-- Psychologists will be generated by JavaScript -->
+                </div>
+                <button class="back-button" onclick="showPage('professionals')">Back to Professional Types</button>
+            </div>
+        </div>
+
+        <!-- Health Facilities Categories Page -->
+        <div id="facilities-categories-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Health Facilities Categories</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Select a category to explore mental health resources.</p>
+                
+                <div class="button-grid">
+                    <div class="nav-button" onclick="showFacilityType('government')">
+                        <div class="button-icon">🏛️</div>
+                        <h3 class="button-title">Government</h3>
+                        <p class="button-description">Government agencies and public mental health services.</p>
+                    </div>
+                    
+                    <div class="nav-button" onclick="showFacilityType('hospitals')">
+                        <div class="button-icon">🏥</div>
+                        <h3 class="button-title">Hospitals</h3>
+                        <p class="button-description">Hospital-based mental health units and services.</p>
+                    </div>
+                    
+                    <div class="nav-button" onclick="showFacilityType('clinics')">
+                        <div class="button-icon">🩺</div>
+                        <h3 class="button-title">Clinics</h3>
+                        <p class="button-description">Private clinics offering mental health services.</p>
+                    </div>
+                    
+                    <div class="nav-button" onclick="showFacilityType('ngos')">
+                        <div class="button-icon">🤝</div>
+                        <h3 class="button-title">NGOs</h3>
+                        <p class="button-description">Non-governmental organizations providing mental health support.</p>
+                    </div>
+                    
+                    <div class="nav-button" onclick="showFacilityType('support-groups')">
+                        <div class="button-icon">👥</div>
+                        <h3 class="button-title">Support Groups</h3>
+                        <p class="button-description">Community-based support groups and resources.</p>
+                    </div>
+                </div>
+                
+                <button class="back-button" onclick="goToHome()">Return to Home</button>
+            </div>
+        </div>
+
+        <!-- Government Facilities Page -->
+        <div id="government-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Government Mental Health Resources</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Government agencies and public mental health services in Bacolod.</p>
+                <div class="facilities-grid" id="governmentGrid">
+                    <!-- Government facilities will be generated by JavaScript -->
+                </div>
+                <button class="back-button" onclick="showPage('facilities-categories')">Back to Categories</button>
+            </div>
+        </div>
+
+        <!-- Hospitals Page -->
+        <div id="hospitals-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Hospital Mental Health Services</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Hospital-based mental health units and services in Bacolod.</p>
+                <div class="facilities-grid" id="hospitalsGrid">
+                    <!-- Hospitals will be generated by JavaScript -->
+                </div>
+                <button class="back-button" onclick="showPage('facilities-categories')">Back to Categories</button>
+            </div>
+        </div>
+
+        <!-- Clinics Page -->
+        <div id="clinics-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Mental Health Clinics</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Private clinics offering mental health services in Bacolod.</p>
+                <div class="facilities-grid" id="clinicsGrid">
+                    <!-- Clinics will be generated by JavaScript -->
+                </div>
+                <button class="back-button" onclick="showPage('facilities-categories')">Back to Categories</button>
+            </div>
+        </div>
+
+        <!-- NGOs Page -->
+        <div id="ngos-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Non-Governmental Organizations</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">NGOs providing mental health support in Bacolod.</p>
+                <div class="facilities-grid" id="ngosGrid">
+                    <!-- NGOs will be generated by JavaScript -->
+                </div>
+                <button class="back-button" onclick="showPage('facilities-categories')">Back to Categories</button>
+            </div>
+        </div>
+
+        <!-- Support Groups Page -->
+        <div id="support-groups-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Support Groups</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Community-based support groups and resources in Bacolod.</p>
+                <div class="facilities-grid" id="supportGroupsGrid">
+                    <!-- Support groups will be generated by JavaScript -->
+                </div>
+                <button class="back-button" onclick="showPage('facilities-categories')">Back to Categories</button>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">About YouMatter</h2>
+                <p class="about-text">
+                    YouMatter is a mental health-focused company dedicated to supporting emotional well-being through innovative journaling tools. YouMatter was created through a spontaneous and meaningful brainstorming session at a library. While discussing possible names for our product, we initially coined the name "EuWrite," combining "Eugene" and "write" relating it to one of the founders' friend who is going through mental difficulties and the core act of journaling.
+                </p>
+                <p class="about-text">
+                    Over time, the name evolved naturally to "YouWrite," reflecting a more direct and personal connection to the user. This shift emphasized the importance of the individual's voice and story. From this, the company name "YouMatter" was born, capturing the central mission of our business, to affirm and support every person's mental health and emotional well-being.
+                </p>
+                <p class="about-text">
+                    The name "YouMatter" is a daily reminder to our users that their feelings, thoughts, and life experiences are important. It serves as a source of encouragement and mental health support, empowering individuals to prioritize their self-care and emotional resilience through guided journaling. YouMatter was founded for awareness and self-reflection, helping individuals initiate their mental wellness journey in a gentle, non-clinical way.
+                </p>
+                <button class="back-button" onclick="goToHome()">Return to Home</button>
+            </div>
+        </div>
+
+        <!-- Removed FAQ Page -->
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Real data for psychiatrists in Bacolod City
+        const psychiatrists = [
+            {
+                name: "Dr. Amador P. Aguirre",
+                credentials: "Psychiatrist",
+                workplace: "The Doctor's Hospital, Inc. & Adventist Medical Center-Bacolod",
+                image: "assets/AGUIRRE.jpg",
+                phone: "034-468-2100 local 5332 / 034-488-7777",
+                location: "Bacolod City"
+            },
+            {
+                name: "Dr. Mae Linda G. R. De Luzuriaga",
+                credentials: "Psychiatrist",
+                workplace: "Queen of Mercy Hospital",
+                image: "assets/luzuriaga.jpg",
+                phone: "034-434-1031 / Secretary: 0929-285-7132, 0943-394-1860",
+                location: "Bacolod City"
+            },
+            {
+                name: "Dr. Charibel E. Escandelor",
+                credentials: "Psychiatrist",
+                workplace: "Villanueva Clinical Laboratory",
+                image: "assets/escandelor.jpg",
+                phone: "034-433-5277",
+                location: "16th Street Lacson, Bacolod City"
+            },
+            {
+                name: "Dr. Cherryl V. Francia",
+                credentials: "Psychiatrist",
+                workplace: "VLI Medical Plaza",
+                image: "assets/francia.jpg",
+                phone: "034-434-9001, 034-435-3766",
+                location: "Bacolod City"
+            },
+            {
+                name: "Dr. Ma. Jocelyn Gauzon-Gayares",
+                credentials: "Psychiatrist",
+                workplace: "North Point Building",
+                image: "assets/gayares.png",
+                phone: "034-432-3515",
+                location: "BS Aquino Drive, Bacolod City"
+            },
+            {
+                name: "Dr. Romeo A. Orcajada, Jr.",
+                credentials: "Psychiatrist",
+                workplace: "Bacolod City Mental Health Care Center",
+                image: "assets/orcajada.png",
+                phone: "034-709-9364",
+                location: "Paglaum Village, Brgy. Mansilingan, Bacolod City"
+            }
+        ];
+
+        // Real data for psychologists in Bacolod City
+        const psychologists = [
+            {
+                name: "Joyce L. Magallon-Fernandez",
+                credentials: "PhD, RGC, RPm, RPsy",
+                specialty: "Counseling & Psychological Testing",
+                workplace: "Psyche Health Assessment and Counseling Center",
+                image: "assets/fernandez.jpg",
+                phone: "034-709-9500",
+                location: "Room 4-7, 2nd Floor, Hospital Avenue Diagnostic Center"
+            },
+            {
+                name: "Johnny B. Decatoria",
+                credentials: "PhD, RPsy, BCETS (Board Certified Expert in Traumatic Stress)",
+                specialty: "Clinical Psychology & Trauma",
+                workplace: "La Consolacion College & University of St. La Salle",
+                image: "assets/decatoria.png",
+                phone: "0917-555-1778",
+                location: "Bacolod City"
+            },
+            {
+                name: "Yanglee H. Dela Fuente",
+                credentials: "MSPsych, RPm, RPsy",
+                specialty: "Training Specialist",
+                workplace: "Commission on Audit Regional Satellite Audit Office",
+                image: "assets/dela fuente.png",
+                phone: "0942-253-0523",
+                location: "Negros Island and Siquijor"
+            },
+            {
+                name: "Abigaile R. Capay",
+                credentials: "MS Psych, RPsy",
+                specialty: "Assessment Psychology: Children and Adolescents",
+                workplace: "Arrows - Mezzanine Floor",
+                image: "assets/capay.png",
+                phone: "0917-100-7877 (By appointment)",
+                location: "#80 13th Street Lacson, Bacolod City"
+            },
+            {
+                name: "Lisa Anna M. Gayoles",
+                credentials: "PhD, RGC, RPsy",
+                specialty: "Psychology Professor",
+                workplace: "University of San Agustin-Iloilo & University of Negros Occidental-Recoletos",
+                image: "assets/gayoles.jpg",
+                phone: "0999-406-5906 / 0927-291-7595",
+                location: "Bacolod City"
+            },
+            {
+                name: "Joeanne D. Jomalesa",
+                credentials: "MSc, RPsy, RPm",
+                specialty: "Clinical Psychology",
+                workplace: "Bacolod City Mental Health Care Center",
+                image: "assets/jomalesa.png",
+                phone: "034-709-9364",
+                location: "Paglaum Village, Brgy. Mansilingan, Bacolod City"
+            },
+            {
+                name: "Rebecca V. Lanes",
+                credentials: "RGC, RPsy, PhD (Cand)",
+                specialty: "Counseling Psychology and Assessment Psychology",
+                workplace: "Wellness Clinic, Riverside Medical Center",
+                image: "assets/lanes.jpg",
+                phone: "034-433-7331 local 3155 or 5383 / 0999-306-8931",
+                location: "Riverside Medical Center, Bacolod City"
+            },
+            {
+                name: "Sharon Rose G. Medez",
+                credentials: "PhD, RPsy, LPT",
+                specialty: "Arts and Sciences Program Coordinator",
+                workplace: "Colegio de Sta. Ana de Victorias",
+                image: "assets/medez.png",
+                phone: "0943-009-0277",
+                location: "Victorias City, Negros Occidental"
+            },
+            {
+                name: "Mark T. Ortibano",
+                credentials: "MSPsyc, RPm, RPsy, CDR",
+                specialty: "Recruitment & Psychology Instruction",
+                workplace: "Province of Negros Occidental, UNO-Recoletos & Riverside College",
+                image: "assets/ortibano.png",
+                phone: "0938-265-4639",
+                location: "Bacolod City"
+            },
+            {
+                name: "Pastor Glenn T. Repique",
+                credentials: "PhD, RPsy",
+                specialty: "Vice President for External Affairs",
+                workplace: "Fellowship Baptist College",
+                image: "assets/repique.png",
+                phone: "0917-148-2964",
+                location: "Kabankalan City, Negros Occidental"
+            },
+            {
+                name: "Adelyn D. Sia",
+                credentials: "PhD, RPsy",
+                specialty: "Clinical Psychology",
+                workplace: "University of Negros Occidental-Recoletos",
+                image: "assets/sia.jpg",
+                phone: "0998-950-0359",
+                location: "Room 3-9, JDI Building (in front of PLDT), Galo St, Bacolod City"
+            }
+        ];
+
+        // Facilities data
+        const facilities = {
+            government: [
+                {
+                    name: "Department of Health / National Center for Mental Health",
+                    details: [
+                        "Suicide Prevention Hotline (Usap Tayo)",
+                        "📞 0917-899-8727 (USAP)",
+                        "📞 02-989-8727 (USAP)"
+                    ]
+                },
+                {
+                    name: "DOH Region 6 – Adolescent Health Connect",
+                    details: [
+                        "📞 1-800-10-333-8336",
+                        "📞 Globe – 0917-775-9256",
+                        "📞 Smart – 0998-532-4047",
+                        "📞 Sun – 0925-546-9919"
+                    ]
+                },
+                {
+                    name: "Provincial Health Office – Mental Health Unit",
+                    details: [
+                        "📞 (034) 435-7590"
+                    ]
+                },
+                {
+                    name: "Bacolod City Mental Health Care Center",
+                    details: [
+                        "📍 Paglaum Village, Brgy. Mansilingan, Bacolod City",
+                        "📞 (034) 700-0647"
+                    ]
+                }
+            ],
+            hospitals: [
+                {
+                    name: "Corazon Locsin Montelibano Memorial Regional Hospital – Mental Health Unit",
+                    details: [
+                        "📍 Bacolod City",
+                        "📞 (034) 703-1350 to 56",
+                        "📞 (034) 431-5801 to 31 Local 815"
+                    ]
+                }
+            ],
+            clinics: [
+                {
+                    name: "White Coat Psychological Clinic",
+                    details: [
+                        "📍 Door 5, 2nd floor, MFR Building, Burgos-Lacson Streets, Bacolod City, Negros Occidental",
+                        "📞 0929-727-1185 / 0928-745-2225 / (034) 466-3018"
+                    ]
+                },
+                {
+                    name: "Riverside Medical Center, Inc. – Wellness Clinic",
+                    details: [
+                        "📍 3/F Executive Offices Building, Bacolod City",
+                        "📞 (034) 433-7331 local 3155 or 5383",
+                        "📞 0999-306-8931"
+                    ]
+                }
+            ],
+            ngos: [
+                {
+                    name: "Natasha Goulbourn Foundation – HOPELINE Philippines",
+                    details: [
+                        "📞 02-8-804-4673 (HOPE)",
+                        "📞 0917-558-4673 (HOPE)",
+                        "📞 2919 (Free for Globe & TM subscribers)"
+                    ]
+                },
+                {
+                    name: "Negros Occidental Drug Rehabilitation Foundation, Inc. (NODRFI)",
+                    details: [
+                        "📍 Camp Gen. Aniceto Lacson Compound, Victorias City, Negros Occidental",
+                        "📞 (034) 399-3388"
+                    ]
+                },
+                {
+                    name: "Negros Occidental Rehabilitation Foundation Inc. (NORFI)",
+                    details: [
+                        "📍 Cottage Road, Brgy. 9, Bacolod City",
+                        "📞 (034) 435-3794 / 709-7887"
+                    ]
+                },
+                {
+                    name: "New Beginnings Foundation, Inc.",
+                    details: [
+                        "📍 2488 Paolo Santo corner Bugnay Street, Bacolod City",
+                        "📞 (034) 458-7273"
+                    ]
+                },
+                {
+                    name: "Better Days Ahead Recovery Center",
+                    details: [
+                        "📍 Greensville 2 Subdivision, Bacolod City",
+                        "📞 (034) 708-0199",
+                        "📞 0933-635-4117"
+                    ]
+                }
+            ],
+            supportGroups: [
+                {
+                    name: "Dr. Calvin Dave D. Ganub, RGC – University of St. La Salle",
+                    details: [
+                        "📧 calvindave@yahoo.com"
+                    ]
+                },
+                {
+                    name: "MHPSS Negros Hub – Ramon C. M. F. Lachica, PhD, RPsy",
+                    details: [
+                        "📍 College of Arts and Sciences, University of St. La Salle",
+                        "📧 jet.octaviano@gmail.com"
+                    ]
+                }
+            ]
+        };
+
+        // Page navigation functions
+        function goToHome() {
+            window.scrollTo(0, 0)
+            document.querySelectorAll('.content-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('home-page').classList.remove('slide-out');
+            document.querySelector('.nav-links').classList.remove('active');
+            
+            // Force scroll to top immediately
+            window.scrollTo(0, 0);
+        }
+
+        function showPage(pageName) {
+            document.getElementById('home-page').classList.add('slide-out');
+            document.querySelectorAll('.content-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelector('.nav-links').classList.remove('active');
+            
+            // Force scroll to top immediately
+            window.scrollTo(0, 0);
+            
+            setTimeout(() => {
+                document.getElementById(`${pageName}-page`).classList.add('active');
+            }, 300);
+        }
+
+        function showProfessionalType(type) {
+            document.getElementById('professionals-page').classList.remove('active');
+            
+            // Force scroll to top immediately
+            window.scrollTo(0, 0);
+            
+            setTimeout(() => {
+                document.getElementById(`${type}-page`).classList.add('active');
+            }, 300);
+        }
+
+        function showFacilityType(type) {
+            document.getElementById('facilities-categories-page').classList.remove('active');
+            
+            // Force scroll to top immediately
+            window.scrollTo(0, 0);
+            
+            setTimeout(() => {
+                document.getElementById(`${type}-page`).classList.add('active');
+            }, 300);
+        }
+
+        // Generate psychiatrists
+        function generatePsychiatrists() {
+            const grid = document.getElementById('psychiatristsGrid');
+            grid.innerHTML = '';
+            
+            psychiatrists.forEach(professional => {
+                const card = document.createElement('div');
+                card.className = 'professional-card';
+                card.onclick = () => openModal(professional, 'psychiatrist');
+                
+                card.innerHTML = `
+                    <img class="professional-avatar-img" src="${professional.image}" alt="${professional.name}">
+                    <div class="professional-name">${professional.name}</div>
+                    <div class="professional-credentials">${professional.credentials}</div>
+                    <div class="professional-workplace">${professional.workplace}</div>
+                    <div class="professional-specialty" style="color: #90cdf4; margin-top: 0.5rem;">${professional.location}</div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Generate psychologists
+        function generatePsychologists() {
+            const grid = document.getElementById('psychologistsGrid');
+            grid.innerHTML = '';
+            
+            psychologists.forEach(professional => {
+                const card = document.createElement('div');
+                card.className = 'professional-card';
+                card.onclick = () => openModal(professional, 'psychologist');
+                
+                card.innerHTML = `
+                    <img class="professional-avatar-img" src="${professional.image}" alt="${professional.name}">
+                    <div class="professional-name">${professional.name}</div>
+                    <div class="professional-credentials">${professional.credentials}</div>
+                    ${professional.specialty ? `<div class="professional-specialty">${professional.specialty}</div>` : ''}
+                    <div class="professional-workplace">${professional.workplace}</div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Generate facilities
+        function generateFacilities() {
+            // Generate government facilities
+            const governmentGrid = document.getElementById('governmentGrid');
+            governmentGrid.innerHTML = '';
+            
+            facilities.government.forEach(facility => {
+                const card = document.createElement('div');
+                card.className = 'facility-card';
+                
+                let detailsHTML = '';
+                facility.details.forEach(detail => {
+                    detailsHTML += `<div class="facility-detail">${detail}</div>`;
+                });
+                
+                card.innerHTML = `
+                    <div class="facility-header">
+                        <div class="facility-icon">🏛️</div>
+                        <div class="facility-name">${facility.name}</div>
+                    </div>
+                    <div class="facility-info">
+                        ${detailsHTML}
+                    </div>
+                `;
+                
+                governmentGrid.appendChild(card);
+            });
+            
+            // Generate hospitals
+            const hospitalsGrid = document.getElementById('hospitalsGrid');
+            hospitalsGrid.innerHTML = '';
+            
+            facilities.hospitals.forEach(facility => {
+                const card = document.createElement('div');
+                card.className = 'facility-card';
+                
+                let detailsHTML = '';
+                facility.details.forEach(detail => {
+                    detailsHTML += `<div class="facility-detail">${detail}</div>`;
+                });
+                
+                card.innerHTML = `
+                    <div class="facility-header">
+                        <div class="facility-icon">🏥</div>
+                        <div class="facility-name">${facility.name}</div>
+                    </div>
+                    <div class="facility-info">
+                        ${detailsHTML}
+                    </div>
+                `;
+                
+                hospitalsGrid.appendChild(card);
+            });
+            
+            // Generate clinics
+            const clinicsGrid = document.getElementById('clinicsGrid');
+            clinicsGrid.innerHTML = '';
+            
+            facilities.clinics.forEach(facility => {
+                const card = document.createElement('div');
+                card.className = 'facility-card';
+                
+                let detailsHTML = '';
+                facility.details.forEach(detail => {
+                    detailsHTML += `<div class="facility-detail">${detail}</div>`;
+                });
+                
+                card.innerHTML = `
+                    <div class="facility-header">
+                        <div class="facility-icon">🩺</div>
+                        <div class="facility-name">${facility.name}</div>
+                    </div>
+                    <div class="facility-info">
+                        ${detailsHTML}
+                    </div>
+                `;
+                
+                clinicsGrid.appendChild(card);
+            });
+            
+            // Generate NGOs
+            const ngosGrid = document.getElementById('ngosGrid');
+            ngosGrid.innerHTML = '';
+            
+            facilities.ngos.forEach(facility => {
+                const card = document.createElement('div');
+                card.className = 'facility-card';
+                
+                let detailsHTML = '';
+                facility.details.forEach(detail => {
+                    detailsHTML += `<div class="facility-detail">${detail}</div>`;
+                });
+                
+                card.innerHTML = `
+                    <div class="facility-header">
+                        <div class="facility-icon">🤝</div>
+                        <div class="facility-name">${facility.name}</div>
+                    </div>
+                    <div class="facility-info">
+                        ${detailsHTML}
+                    </div>
+                `;
+                
+                ngosGrid.appendChild(card);
+            });
+            
+            // Generate support groups
+            const supportGroupsGrid = document.getElementById('supportGroupsGrid');
+            supportGroupsGrid.innerHTML = '';
+            
+            facilities.supportGroups.forEach(facility => {
+                const card = document.createElement('div');
+                card.className = 'facility-card';
+                
+                let detailsHTML = '';
+                facility.details.forEach(detail => {
+                    detailsHTML += `<div class="facility-detail">${detail}</div>`;
+                });
+                
+                card.innerHTML = `
+                    <div class="facility-header">
+                        <div class="facility-icon">👥</div>
+                        <div class="facility-name">${facility.name}</div>
+                    </div>
+                    <div class="facility-info">
+                        ${detailsHTML}
+                    </div>
+                `;
+                
+                supportGroupsGrid.appendChild(card);
+            });
+        }
+
+        // Modal functions
+        function openModal(professional, type) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            
+            let detailsHTML = `
+                <img class="modal-avatar-img" src="${professional.image}" alt="${professional.name}">
+                <div class="modal-name">${professional.name}</div>
+                <div class="modal-details">
+                    <p><strong>Professional Credentials:</strong> ${professional.credentials}</p>
+            `;
+            
+            if (professional.specialty) {
+                detailsHTML += `<p><strong>Clinical Specialty:</strong> ${professional.specialty}</p>`;
+            }
+            
+            detailsHTML += `
+                    <p><strong>Practice Affiliation:</strong> ${professional.workplace}</p>
+                    <p><strong>Contact Phone:</strong> ${professional.phone}</p>
+            `;
+            
+            if (professional.location) {
+                detailsHTML += `<p><strong>Location:</strong> ${professional.location}</p>`;
+            }
+            
+            detailsHTML += `</div>`;
+            
+            modalContent.innerHTML = detailsHTML;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Mobile menu
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) closeModal();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generatePsychiatrists();
+            generatePsychologists();
+            generateFacilities();
+        });
+    </script>
+</body>
+</html>
