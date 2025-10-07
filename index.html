@@ -1027,159 +1027,160 @@
 
     <script>
         // Real data for psychiatrists in Bacolod City
-        const psychiatrists = [
-            {
-                name: "Dr. Amador P. Aguirre",
-                credentials: "Psychiatrist",
-                workplace: "The Doctor's Hospital, Inc. & Adventist Medical Center-Bacolod",
-                image: "assets/AGUIRRE.jpg",
-                phone: "034-468-2100 local 5332 / 034-488-7777",
-                location: "Bacolod City"
-            },
-            {
-                name: "Dr. Mae Linda G. R. De Luzuriaga",
-                credentials: "Psychiatrist",
-                workplace: "Queen of Mercy Hospital",
-                image: "assets/luzuriaga.jpg",
-                phone: "034-434-1031 / Secretary: 0929-285-7132, 0943-394-1860",
-                location: "Bacolod City"
-            },
-            {
-                name: "Dr. Charibel E. Escandelor",
-                credentials: "Psychiatrist",
-                workplace: "Villanueva Clinical Laboratory",
-                image: "assets/escandelor.jpg",
-                phone: "034-433-5277",
-                location: "16th Street Lacson, Bacolod City"
-            },
-            {
-                name: "Dr. Cherryl V. Francia",
-                credentials: "Psychiatrist",
-                workplace: "VLI Medical Plaza",
-                image: "assets/francia.jpg",
-                phone: "034-434-9001, 034-435-3766",
-                location: "Bacolod City"
-            },
-            {
-                name: "Dr. Ma. Jocelyn Gauzon-Gayares",
-                credentials: "Psychiatrist",
-                workplace: "North Point Building",
-                image: "assets/gayares.png",
-                phone: "034-432-3515",
-                location: "BS Aquino Drive, Bacolod City"
-            },
-            {
-                name: "Dr. Romeo A. Orcajada, Jr.",
-                credentials: "Psychiatrist",
-                workplace: "Bacolod City Mental Health Care Center",
-                image: "assets/orcajada.png",
-                phone: "034-709-9364",
-                location: "Paglaum Village, Brgy. Mansilingan, Bacolod City"
-            }
-        ];
+       const psychiatrists = [
+    {
+        name: "Dr. Amador P. Aguirre",
+        credentials: "Psychiatrist",
+        workplace: "The Doctor's Hospital, Inc. & Adventist Medical Center-Bacolod",
+        image: "assets/AGUIRRE.jpg",
+        phone: "034-468-2100 local 5332 / 034-488-7777",
+        location: "Bacolod City"
+    },
+    {
+        name: "Dr. Mae Linda G. R. De Luzuriaga",
+        credentials: "Psychiatrist",
+        workplace: "Queen of Mercy Hospital",
+        image: "assets/LUZURIAGA.jpg",
+        phone: "034-434-1031 / Secretary: 0929-285-7132, 0943-394-1860",
+        location: "Bacolod City"
+    },
+    {
+        name: "Dr. Charibel E. Escandelor",
+        credentials: "Psychiatrist",
+        workplace: "Villanueva Clinical Laboratory",
+        image: "assets/ESCANDELOR.jpg",
+        phone: "034-433-5277",
+        location: "16th Street Lacson, Bacolod City"
+    },
+    {
+        name: "Dr. Cherryl V. Francia",
+        credentials: "Psychiatrist",
+        workplace: "VLI Medical Plaza",
+        image: "assets/FRANCIA.jpg",
+        phone: "034-434-9001, 034-435-3766",
+        location: "Bacolod City"
+    },
+    {
+        name: "Dr. Ma. Jocelyn Gauzon-Gayares",
+        credentials: "Psychiatrist",
+        workplace: "North Point Building",
+        image: "assets/GAYARES.PNG",
+        phone: "034-432-3515",
+        location: "BS Aquino Drive, Bacolod City"
+    },
+    {
+        name: "Dr. Romeo A. Orcajada, Jr.",
+        credentials: "Psychiatrist",
+        workplace: "Bacolod City Mental Health Care Center",
+        image: "assets/OR-CAJADA.PNG",
+        phone: "034-709-9364",
+        location: "Paglaum Village, Brgy. Mansilingan, Bacolod City"
+    }
+];
 
-        // Real data for psychologists in Bacolod City
-        const psychologists = [
-            {
-                name: "Joyce L. Magallon-Fernandez",
-                credentials: "PhD, RGC, RPm, RPsy",
-                specialty: "Counseling & Psychological Testing",
-                workplace: "Psyche Health Assessment and Counseling Center",
-                image: "assets/fernandez.jpg",
-                phone: "034-709-9500",
-                location: "Room 4-7, 2nd Floor, Hospital Avenue Diagnostic Center"
-            },
-            {
-                name: "Johnny B. Decatoria",
-                credentials: "PhD, RPsy, BCETS (Board Certified Expert in Traumatic Stress)",
-                specialty: "Clinical Psychology & Trauma",
-                workplace: "La Consolacion College & University of St. La Salle",
-                image: "assets/decatoria.png",
-                phone: "0917-555-1778",
-                location: "Bacolod City"
-            },
-            {
-                name: "Yanglee H. Dela Fuente",
-                credentials: "MSPsych, RPm, RPsy",
-                specialty: "Training Specialist",
-                workplace: "Commission on Audit Regional Satellite Audit Office",
-                image: "assets/dela fuente.png",
-                phone: "0942-253-0523",
-                location: "Negros Island and Siquijor"
-            },
-            {
-                name: "Abigaile R. Capay",
-                credentials: "MS Psych, RPsy",
-                specialty: "Assessment Psychology: Children and Adolescents",
-                workplace: "Arrows - Mezzanine Floor",
-                image: "assets/capay.png",
-                phone: "0917-100-7877 (By appointment)",
-                location: "#80 13th Street Lacson, Bacolod City"
-            },
-            {
-                name: "Lisa Anna M. Gayoles",
-                credentials: "PhD, RGC, RPsy",
-                specialty: "Psychology Professor",
-                workplace: "University of San Agustin-Iloilo & University of Negros Occidental-Recoletos",
-                image: "assets/gayoles.jpg",
-                phone: "0999-406-5906 / 0927-291-7595",
-                location: "Bacolod City"
-            },
-            {
-                name: "Joeanne D. Jomalesa",
-                credentials: "MSc, RPsy, RPm",
-                specialty: "Clinical Psychology",
-                workplace: "Bacolod City Mental Health Care Center",
-                image: "assets/jomalesa.png",
-                phone: "034-709-9364",
-                location: "Paglaum Village, Brgy. Mansilingan, Bacolod City"
-            },
-            {
-                name: "Rebecca V. Lanes",
-                credentials: "RGC, RPsy, PhD (Cand)",
-                specialty: "Counseling Psychology and Assessment Psychology",
-                workplace: "Wellness Clinic, Riverside Medical Center",
-                image: "assets/lanes.jpg",
-                phone: "034-433-7331 local 3155 or 5383 / 0999-306-8931",
-                location: "Riverside Medical Center, Bacolod City"
-            },
-            {
-                name: "Sharon Rose G. Medez",
-                credentials: "PhD, RPsy, LPT",
-                specialty: "Arts and Sciences Program Coordinator",
-                workplace: "Colegio de Sta. Ana de Victorias",
-                image: "assets/medez.png",
-                phone: "0943-009-0277",
-                location: "Victorias City, Negros Occidental"
-            },
-            {
-                name: "Mark T. Ortibano",
-                credentials: "MSPsyc, RPm, RPsy, CDR",
-                specialty: "Recruitment & Psychology Instruction",
-                workplace: "Province of Negros Occidental, UNO-Recoletos & Riverside College",
-                image: "assets/ortibano.png",
-                phone: "0938-265-4639",
-                location: "Bacolod City"
-            },
-            {
-                name: "Pastor Glenn T. Repique",
-                credentials: "PhD, RPsy",
-                specialty: "Vice President for External Affairs",
-                workplace: "Fellowship Baptist College",
-                image: "assets/repique.png",
-                phone: "0917-148-2964",
-                location: "Kabankalan City, Negros Occidental"
-            },
-            {
-                name: "Adelyn D. Sia",
-                credentials: "PhD, RPsy",
-                specialty: "Clinical Psychology",
-                workplace: "University of Negros Occidental-Recoletos",
-                image: "assets/sia.jpg",
-                phone: "0998-950-0359",
-                location: "Room 3-9, JDI Building (in front of PLDT), Galo St, Bacolod City"
-            }
-        ];
+// Real data for psychologists in Bacolod City
+const psychologists = [
+    {
+        name: "Joyce L. Magallon-Fernandez",
+        credentials: "PhD, RGC, RPm, RPsy",
+        specialty: "Counseling & Psychological Testing",
+        workplace: "Psyche Health Assessment and Counseling Center",
+        image: "assets/FERNANDEZ.JPG",
+        phone: "034-709-9500",
+        location: "Room 4-7, 2nd Floor, Hospital Avenue Diagnostic Center"
+    },
+    {
+        name: "Johnny B. Decatoria",
+        credentials: "PhD, RPsy, BCETS (Board Certified Expert in Traumatic Stress)",
+        specialty: "Clinical Psychology & Trauma",
+        workplace: "La Consolacion College & University of St. La Salle",
+        image: "assets/DECATORIA.PNG",
+        phone: "0917-555-1778",
+        location: "Bacolod City"
+    },
+    {
+        name: "Yanglee H. Dela Fuente",
+        credentials: "MSPsych, RPm, RPsy",
+        specialty: "Training Specialist",
+        workplace: "Commission on Audit Regional Satellite Audit Office",
+        image: "assets/DELA FUENTE.PNG",
+        phone: "0942-253-0523",
+        location: "Negros Island and Siquijor"
+    },
+    {
+        name: "Abigaile R. Capay",
+        credentials: "MS Psych, RPsy",
+        specialty: "Assessment Psychology: Children and Adolescents",
+        workplace: "Arrows - Mezzanine Floor",
+        image: "assets/CAPAY.PNG",
+        phone: "0917-100-7877 (By appointment)",
+        location: "#80 13th Street Lacson, Bacolod City"
+    },
+    {
+        name: "Lisa Anna M. Gayoles",
+        credentials: "PhD, RGC, RPsy",
+        specialty: "Psychology Professor",
+        workplace: "University of San Agustin-Iloilo & University of Negros Occidental-Recoletos",
+        image: "assets/GAYOLES.JPG",
+        phone: "0999-406-5906 / 0927-291-7595",
+        location: "Bacolod City"
+    },
+    {
+        name: "Joeanne D. Jomalesa",
+        credentials: "MSc, RPsy, RPm",
+        specialty: "Clinical Psychology",
+        workplace: "Bacolod City Mental Health Care Center",
+        image: "assets/JOMALESA.PNG",
+        phone: "034-709-9364",
+        location: "Paglaum Village, Brgy. Mansilingan, Bacolod City"
+    },
+    {
+        name: "Rebecca V. Lanes",
+        credentials: "RGC, RPsy, PhD (Cand)",
+        specialty: "Counseling Psychology and Assessment Psychology",
+        workplace: "Wellness Clinic, Riverside Medical Center",
+        image: "assets/LANES.JPG",
+        phone: "034-433-7331 local 3155 or 5383 / 0999-306-8931",
+        location: "Riverside Medical Center, Bacolod City"
+    },
+    {
+        name: "Sharon Rose G. Medez",
+        credentials: "PhD, RPsy, LPT",
+        specialty: "Arts and Sciences Program Coordinator",
+        workplace: "Colegio de Sta. Ana de Victorias",
+        image: "assets/MEDEZ.PNG",
+        phone: "0943-009-0277",
+        location: "Victorias City, Negros Occidental"
+    },
+    {
+        name: "Mark T. Ortibano",
+        credentials: "MSPsyc, RPm, RPsy, CDR",
+        specialty: "Recruitment & Psychology Instruction",
+        workplace: "Province of Negros Occidental, UNO-Recoletos & Riverside College",
+        image: "assets/ORTIBANO.PNG",
+        phone: "0938-265-4639",
+        location: "Bacolod City"
+    },
+    {
+        name: "Pastor Glenn T. Repique",
+        credentials: "PhD, RPsy",
+        specialty: "Vice President for External Affairs",
+        workplace: "Fellowship Baptist College",
+        image: "assets/REPIQUE.PNG",
+        phone: "0917-148-2964",
+        location: "Kabankalan City, Negros Occidental"
+    },
+    {
+        name: "Adelyn D. Sia",
+        credentials: "PhD, RPsy",
+        specialty: "Clinical Psychology",
+        workplace: "University of Negros Occidental-Recoletos",
+        image: "assets/SIA.JPG",
+        phone: "0998-950-0359",
+        location: "Room 3-9, JDI Building (in front of PLDT), Galo St, Bacolod City"
+    }
+];
+
 
         // Facilities data
         const facilities = {
