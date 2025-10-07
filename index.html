@@ -5,32 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouMatter - Mental Health Journals</title>
     <style>
-        /* Previous CSS remains the same, just adding image-specific styles */
-        
-        /* Image avatar styles */
-        .professional-avatar-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            object-fit: cover;
-            background: linear-gradient(135deg, #4299e1, #3182ce); /* Fallback if image doesn't load */
-            display: block;
-        }
-        
-        .modal-avatar-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 2rem;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            object-fit: cover;
-            background: linear-gradient(135deg, #4299e1, #3182ce); /* Fallback if image doesn't load */
-            display: block;
-        }
-        
-        /* Rest of your CSS remains exactly the same */
+        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
@@ -344,10 +319,10 @@
             top: 0;
             left: 100%;
             background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
-            padding: 120px 2rem 4rem;
+            padding: 120px 2rem 2rem;
             transition: transform 0.5s ease-in-out;
             overflow-x: hidden;
-            /* Removed min-height: 100vh to fix scrolling issue */
+            min-height: 100vh;
         }
 
         .content-page.active {
@@ -374,6 +349,58 @@
             color: #e2e8f0;
             margin-bottom: 2rem;
             text-align: justify;
+        }
+
+        /* Services Page Styles */
+        .services-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+        
+        .service-section {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .service-image {
+            flex: 0 0 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .service-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .service-description {
+            flex: 1;
+            color: #e2e8f0;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        .service-description h3 {
+            color: #f7fafc;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .landscape-image {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        
+        .landscape-image img {
+            width: 100%;
         }
 
         /* Professionals Grid */
@@ -441,6 +468,29 @@
         .professional-workplace {
             color: #a0aec0;
             font-size: 0.9rem;
+        }
+
+        /* Image avatar styles */
+        .professional-avatar-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            display: block;
+        }
+        
+        .modal-avatar-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            display: block;
         }
 
         /* Facilities Grid */
@@ -745,6 +795,16 @@
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
+            
+            /* Services responsive */
+            .service-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .service-image {
+                flex: 0 0 auto;
+            }
         }
 
         @media (max-width: 480px) {
@@ -782,8 +842,8 @@
             <nav>
                 <ul class="nav-links">
                     <li><a onclick="goToHome()">HOME</a></li>
+                    <li><a onclick="showPage('services')">SERVICES</a></li>
                     <li><a onclick="showPage('about')">ABOUT</a></li>
-                    <!-- Removed FAQ link -->
                 </ul>
                 <div class="mobile-menu" onclick="toggleMobileMenu()">
                     <span></span>
@@ -843,6 +903,45 @@
                     </div>
                 </div>
             </footer>
+        </div>
+
+        <!-- Services Page -->
+        <div id="services-page" class="content-page">
+            <div class="content-container">
+                <h2 class="page-title">Our Services</h2>
+                <p style="text-align: center; color: #a0aec0; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Discover our specialized mental health journal products designed to support your wellness journey.
+                </p>
+                
+                <div class="services-content">
+                    <!-- Product Design Section -->
+                    <div class="service-section">
+                        <div class="service-image">
+                            <img src="ymatter.png" alt="YouJourn Product Design" style="max-height: 400px;">
+                        </div>
+                        <div class="service-description">
+                            <h3>Product Design</h3>
+                            <p>
+                                YouJourn is a guided 30-day mental health journal that helps users track their moods and emotions daily. It includes prompts for self-reflection and features a QR code linking to digital mental health resources. This supplementary product, designed to encourage emotional awareness and support mental wellness, offers an affordable, simple tool for those seeking to build a journaling habit without replacing professional care.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Content Layout Section -->
+                    <div class="service-section" style="flex-direction: column;">
+                        <div class="landscape-image">
+                            <img src="umatter.png" alt="YouJourn Content Layout">
+                        </div>
+                        <div class="service-description">
+                            <h3>Product Content Layout</h3>
+                            <p>
+                                Our carefully designed content layout provides an intuitive structure for daily journaling, mood tracking, and reflection. The layout is optimized for ease of use while encouraging meaningful engagement with your thoughts and emotions.
+                            </p>
+                        </div>
+                        <button class="back-button" onclick="goToHome()">Back to Home</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Medical Professionals Selection Page -->
@@ -1011,8 +1110,6 @@
                 <button class="back-button" onclick="goToHome()">Return to Home</button>
             </div>
         </div>
-
-        <!-- Removed FAQ Page -->
     </div>
 
     <!-- Modal -->
@@ -1301,51 +1398,61 @@ const psychologists = [
 
         // Page navigation functions
         function goToHome() {
-            window.scrollTo(0, 0)
+            // Scroll to top immediately
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            
             document.querySelectorAll('.content-page').forEach(page => {
                 page.classList.remove('active');
             });
             document.getElementById('home-page').classList.remove('slide-out');
             document.querySelector('.nav-links').classList.remove('active');
             
-            // Force scroll to top immediately
-            window.scrollTo(0, 0);
+            // Force scroll to top after a small delay to ensure it works
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }, 10);
         }
 
         function showPage(pageName) {
+            // Scroll to top immediately
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            
             document.getElementById('home-page').classList.add('slide-out');
             document.querySelectorAll('.content-page').forEach(page => {
                 page.classList.remove('active');
             });
             document.querySelector('.nav-links').classList.remove('active');
             
-            // Force scroll to top immediately
-            window.scrollTo(0, 0);
-            
             setTimeout(() => {
                 document.getElementById(`${pageName}-page`).classList.add('active');
+                // Scroll to top again after transition
+                window.scrollTo({ top: 0, behavior: 'instant' });
             }, 300);
         }
 
         function showProfessionalType(type) {
-            document.getElementById('professionals-page').classList.remove('active');
+            // Scroll to top immediately
+            window.scrollTo({ top: 0, behavior: 'instant' });
             
-            // Force scroll to top immediately
-            window.scrollTo(0, 0);
+            document.getElementById('professionals-page').classList.remove('active');
             
             setTimeout(() => {
                 document.getElementById(`${type}-page`).classList.add('active');
+                // Scroll to top again after transition
+                window.scrollTo({ top: 0, behavior: 'instant' });
             }, 300);
         }
 
         function showFacilityType(type) {
-            document.getElementById('facilities-categories-page').classList.remove('active');
+            // Scroll to top immediately
+            window.scrollTo({ top: 0, behavior: 'instant' });
             
-            // Force scroll to top immediately
-            window.scrollTo(0, 0);
+            document.getElementById('facilities-categories-page').classList.remove('active');
             
             setTimeout(() => {
                 document.getElementById(`${type}-page`).classList.add('active');
+                // Scroll to top again after transition
+                window.scrollTo({ top: 0, behavior: 'instant' });
             }, 300);
         }
 
@@ -1577,6 +1684,9 @@ const psychologists = [
             generatePsychiatrists();
             generatePsychologists();
             generateFacilities();
+            
+            // Ensure we start at the top of the page
+            window.scrollTo(0, 0);
         });
     </script>
 </body>
